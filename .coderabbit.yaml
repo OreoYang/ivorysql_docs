@@ -8,3 +8,5 @@ reviews:
     enabled: true
     drafts: false
     base_branches: ["master", "IVORY_REL_5_STABLE", "auto_review"]
+  path_instructions:
+    include: "CN/**"
