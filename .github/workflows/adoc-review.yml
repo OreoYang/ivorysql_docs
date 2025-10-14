@@ -1,0 +1,73 @@
+name: AsciiDoc Review
+
+on:
+  push:
+    branches: [main, master, auto_review]
+    paths: ['**.adoc', '**.asciidoc']
+  pull_request:
+    branches: [main, master, auto_review]
+    paths: ['**.adoc', '**.asciidoc']
+
+jobs:
+  adoc-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: ~/.gem
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+            
+      - name: Install Asciidoctor
+        run: |
+            gem install asciidoctor --version '~>2.3.19'
+            gem install asciidoctor-diagram --version '~>2.3.19'
+
+      - name: Validate AsciiDoc syntax
+        run: |
+            set -e
+            files=$(find . -name "*.adoc" -o -name "*.asciidoc")
+            if [ -n "$files" ]; then
+              echo "Found AsciiDoc files to validate:"
+              echo "$files"
+              echo "$files" | xargs -I {} sh -c 'echo "Validating: $1" && asciidoctor -b docbook -o /dev/null "$1"' _ {}
+            else
+              echo "No AsciiDoc files found to validate"
+            fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install asciidoc-link-check
+        run: npm install --save-dev asciidoc-link-check@1.17.0
+
+      - name: Create link check config
+        run: |
+            cat > .asciidoc-link-check.json << 'EOF'
+            {
+              "ignorePatterns": [
+                {
+                  "pattern": "^http://localhost"
+                }
+              ],
+              "timeout": "10s",
+              "retryOn429": true,
+              "retryCount": 3
+            }
+            EOF
+            
+      - name: Check internal links
+        run: |
+            find . \( -name "*.adoc" -o -name "*.asciidoc" \) | xargs -I {} asciidoc-link-check -c .asciidoc-link-check.json {}
