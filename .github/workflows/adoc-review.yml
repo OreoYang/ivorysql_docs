@@ -2,10 +2,10 @@ name: AsciiDoc Review
 
 on:
   push:
-    branches: [main, master, auto_review]
+    branches: [main, master]
     paths: ['**.adoc', '**.asciidoc']
   pull_request:
-    branches: [main, master, auto_review]
+    branches: [main, master]
     paths: ['**.adoc', '**.asciidoc']
 
 jobs:
