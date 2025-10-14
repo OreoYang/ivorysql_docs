@@ -70,4 +70,4 @@ jobs:
             
       - name: Check internal links
         run: |
-            find . \( -name "*.adoc" -o -name "*.asciidoc" \) | xargs -I {} asciidoc-link-check -c .asciidoc-link-check.json {}
+            find . \( -name "*.adoc" -o -name "*.asciidoc" \) | xargs -I {} npx asciidoc-link-check -c .asciidoc-link-check.json {}
