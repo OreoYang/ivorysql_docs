@@ -51,7 +51,7 @@ jobs:
           node-version: '18'
           
       - name: Install asciidoc-link-check
-        run: npm install --save-dev asciidoc-link-check@1.17.0
+        run: npm install --save-dev asciidoc-link-check
 
       - name: Create link check config
         run: |
