@@ -111,7 +111,7 @@ oravarcharchar(PG_FUNCTION_ARGS)
 在源代码中，这个GUC参数被用于下面这些函数：
 oradate_in()、oratimestamp_in()、oratimestampltz_in()以及oratimestamptz_in()。
 
-如果相应的掩码被设置，则调用原生PG的处理函数，否则调用兼容代码并忽略NLS格式。
+如果相应的掩码被设置，则调用原生PG的处理函数，否则调用兼容代码并忽视NLS格式。
 
 === GUC参数 nls_date_format/nls_timestamp_format/nls_timestamp_tz_format 
 
