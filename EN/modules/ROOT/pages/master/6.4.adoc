@@ -26,7 +26,7 @@ To enable GB18030 as a server encoding, modifications are made to pg_enc, and ne
 
 A global variable, is_load_gb18030_2022, is introduced with a default value of true. When the -E option is used during initdb, the get_encoding_id function checks the specified encoding name. If the name is gb18030_2022, it is internally mapped to the gb18030 encoding ID, and the is_load_gb18030_2022 flag is set to true. If the -E option is GB18030, the flag is set to false.
 
-At the appropriate stage in the startup process, the system checks this flag to determine if the extension should be loaded. If required, the load_gb18030_2022 function is executed, and the gb18030_2022 extension is added to the shared_preload_libraries parameter in ivorysql.conf.
+At the appropriate stage in the startup process, the system checks this flag to determine if the extension should be loaded. If required, the load_gb18030_2022 function is executed, and the gb18030_2022 extension is added to the shared_preload_libraries parameter in ivorysql.conf files.
 ```
 if (encoding_name && *encoding_name)
 {

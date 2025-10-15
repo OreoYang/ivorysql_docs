@@ -25,9 +25,9 @@ PostgreSQL已支持GB18030-2000版本作为客户端编码，通过扩展的方�
 
 修改pg_enc来实现可指定GB18030作为服务端编码，PostgreSQL编码框架中增加底层函数以供pg内核调用。
 
-设置一个全局变量is_load_gb18030_2022,默认为true,当用户指定-E选项时,在get_encoding_id中判断其设置的是否为gb18030_2022,如果是,将其字符串转为gb18030,然后将is_load_gb18030_2022 设为true,如果-E 选项为Gb18030,将其设为false。
+设置一个全局变量is_load_gb18030_2022,默认为true,当用户指定-E选项时,在get_encoding_id中判断其设置的是否为gb18030_2022,如果是, 将其字符串转为gb18030,然后将is_load_gb18030_2022 设为true,如果-E 选项为Gb18030,将其设为false。
 
-在适当位置判断是否要加载插件,如果是,执行load_gb18030_2022,并将ivorysql.conf中的shared_preload_library添加gb18030_2022。
+在适当位置判断是否要加载插件, 如果是,执行load_gb18030_2022,并将ivorysql.conf中的shared_preload_library添加gb18030_2022。
 
 ```
 if (encoding_name && *encoding_name)
@@ -66,7 +66,7 @@ pg_gb18030_verifier(const unsigned char *s, int len)：校验字节范围，拒�
 
 发送数据: 当该客户端执行 SELECT 查询时，服务端会从磁盘/内存中读取原生的 GB18030 数据，然后调用 gb18030_to_utf8 函数将其转换为 UTF-8 格式，最后再通过网络协议发送给客户端。
 
-新增GB18030-2022.xml数据文件，通过perl脚本解析为map文件，提供 gb18030_to_utf8() 与 utf8_to_gb18030()，优先表驱动，覆盖不到的区间通过算法映射。
+新增GB18030-2022.xml数据文件，通过perl脚本解析为map文件，提供 gb18030_to_utf8() 与 utf8_to_gb18030()，优先表驱动，覆盖不到的区间通过算法映射;
 
 ```
 static inline uint32
