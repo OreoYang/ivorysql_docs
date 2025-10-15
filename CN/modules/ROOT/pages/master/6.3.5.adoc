@@ -135,5 +135,8 @@ char	   *nls_iso_currency = "AMERICA";
 这三个参数将在oracle兼容函数to_number()中被使用。
 [NOTE]
 ====
-`to_number()`函数尚未实现。傻大姐撒低级啊实打实
+`to_number()`函数尚未实现。
 ====
+
+
+还是大师啊时代是
